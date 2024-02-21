@@ -10,9 +10,12 @@ public class CacheTest {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         CacheDataBase cache = new CacheDataBase();
         for(int i = 0; i < 10; i ++){
-            cache.put(String.valueOf(i), "测试数据");
-            cache.expired(1000 * 5);
-            cache.save();
+            int finalI = i;
+            new Thread(() -> {
+                cache.put(String.valueOf(finalI), "测试数据");
+                cache.expired(1000 * 5);
+                cache.save();
+            }).start();
         }
         System.out.println(cache.get("111"));
 
