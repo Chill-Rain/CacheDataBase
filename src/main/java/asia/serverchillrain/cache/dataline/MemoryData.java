@@ -27,6 +27,7 @@ public class MemoryData implements Serializable {
         length = data.length();
     }
     public void expired(long time) {
+        needExpired = true;
         expiredTime = createTime + time;
     }
 }
