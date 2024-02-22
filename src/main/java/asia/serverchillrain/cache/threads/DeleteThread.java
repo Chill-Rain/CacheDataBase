@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * &#064;auther  2024 02 21
+ * 删除线程
  */
 
 public class DeleteThread extends Thread{

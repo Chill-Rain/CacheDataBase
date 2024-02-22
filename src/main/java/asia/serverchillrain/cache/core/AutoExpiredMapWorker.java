@@ -1,4 +1,4 @@
-package asia.serverchillrain.cache.utils;
+package asia.serverchillrain.cache.core;
 
 import asia.serverchillrain.cache.dataline.MemoryData;
 import com.alibaba.fastjson2.JSON;
@@ -12,11 +12,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * &#064;auther  2024 01 27
- * Jar下的内存处理器
+ * Map工作器 负责磁盘IO工作
  */
 
-public class DataBaseUtil {
-    private static final Logger logger = LoggerFactory.getLogger(DataBaseUtil.class);
+public class AutoExpiredMapWorker {
+    private static final Logger logger = LoggerFactory.getLogger(AutoExpiredMapWorker.class);
     private static final String path = "data.mp";
 
     /**
@@ -27,7 +27,7 @@ public class DataBaseUtil {
      */
     public static Map<String, MemoryData> getDataBase() throws IOException, ClassNotFoundException {
         if(new File(path).exists()){
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(path)));
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path));
             Object o = ois.readObject();
             ois.close();
             if(o instanceof String){
@@ -47,7 +47,7 @@ public class DataBaseUtil {
      * 序列化库
      * @param database 库
      */
-    public static void saveDataBase(Map<String, MemoryData> database){
+    protected static void saveDataBase(Map<String, MemoryData> database){
         try {
             String databaseJson = JSON.toJSONString(database);
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
@@ -61,7 +61,6 @@ public class DataBaseUtil {
     private static ConcurrentHashMap<String, MemoryData> readJsonDataBase(String json){
         return JSON.parseObject(json, new TypeReference<>() {
         });
-
     }
 
 }

@@ -1,23 +1,23 @@
 package asia.serverchillrain.cache;
 
+import asia.serverchillrain.cache.core.AutoExpiredMap;
+
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * &#064;auther  2024 02 21
  */
 
 public class CacheTest {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        CacheDataBase cache = new CacheDataBase();
-        for(int i = 0; i < 100; i ++){
-            int finalI = i;
-            new Thread(() -> {
-                cache.put(String.valueOf(finalI), "测试数据");
-                cache.expired(1000 * 5);
-                cache.save();
-            }).start();
-        }
-        System.out.println(cache.get("111"));
+    public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+//        AutoExpiredMap cache = new AutoExpiredMap();
+        System.out.println();
+        Class<AutoExpiredMap> clazz = AutoExpiredMap.class;
+        Constructor<AutoExpiredMap> constructor = clazz.getDeclaredConstructor();
+        constructor.setAccessible(true);
+        AutoExpiredMap map = constructor.newInstance();
 
     }
 }

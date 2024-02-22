@@ -9,9 +9,10 @@ import java.util.concurrent.BlockingQueue;
 
 /**
  * &#064;auther  2024 02 21
+ * 检查线程
  */
 
-public class ConsumeThread extends Thread{
+public class ConsumeThread  extends Thread{
     private static final Logger logger = LoggerFactory.getLogger(ConsumeThread.class);
     private final BlockingQueue<String> queue;
     private final Map<String, MemoryData> memoryDataBase;

@@ -11,15 +11,16 @@ import java.util.concurrent.BlockingQueue;
 
 /**
  * &#064;auther  2024 02 21
+ * 标记线程
  */
 
 public class ProduceThread extends Thread{
     private static final Logger logger = LoggerFactory.getLogger(ProduceThread.class);
     private final BlockingQueue<String> queue;
     private final Map<String, MemoryData> memoryDataBase;
-    private boolean flag;
+    private final boolean flag;
 
-    public ProduceThread(BlockingQueue<String> queue, Map<String, MemoryData> memoryDataBase, boolean flag) {
+    public  ProduceThread(BlockingQueue<String> queue, Map<String, MemoryData> memoryDataBase, boolean flag) {
         this.queue = queue;
         this.memoryDataBase = memoryDataBase;
         this.flag = flag;
