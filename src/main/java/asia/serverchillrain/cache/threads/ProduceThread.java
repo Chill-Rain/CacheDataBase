@@ -32,23 +32,19 @@ public class ProduceThread extends Thread{
                 //读取库容量大小，并动态确定要标记的数量
                 int size = memoryDataBase.size();
                 //动态确定淘汰数量
-                int checkCount = 25;
+                int checkCount = 5;
                 int count = (size / checkCount) < checkCount ? 0 : (size / checkCount);
                 Random random = new Random();
                 if(!memoryDataBase.isEmpty()){
-                    memoryDataBase.forEach((key, data) ->{
+                    for(int i = 0; i < count; i ++){
                         int index = random.nextInt(size);
                         Set<String> keys = memoryDataBase.keySet();
                         String[] array = keys.toArray(new String[0]);
-                        key = array[index];
-                        try {
-                            if(!queue.contains(key) && memoryDataBase.get(key).getNeedExpired()){
-                                queue.put(key);
-                            }
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
+                        String key = array[index];
+                        if(!queue.contains(key) && memoryDataBase.get(key).getNeedExpired()){
+                            queue.put(key);
                         }
-                    });
+                    }
                 }
                 Thread.sleep(1000);
             }

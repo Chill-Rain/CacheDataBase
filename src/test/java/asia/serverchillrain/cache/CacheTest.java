@@ -9,7 +9,7 @@ import java.io.IOException;
 public class CacheTest {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         CacheDataBase cache = new CacheDataBase();
-        for(int i = 0; i < 10; i ++){
+        for(int i = 0; i < 100; i ++){
             int finalI = i;
             new Thread(() -> {
                 cache.put(String.valueOf(finalI), "测试数据");

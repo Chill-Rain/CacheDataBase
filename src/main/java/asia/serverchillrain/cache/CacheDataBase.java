@@ -25,19 +25,21 @@ public class CacheDataBase {
     private final Map<String, MemoryData> memoryDataBase = DataBaseUtil.getDataBase();
     //日志记录器
     private final Logger logger = LoggerFactory.getLogger(CacheDataBase.class);
-    //标记队列
-    private final BlockingQueue<String> queue = new ArrayBlockingQueue<>(100);
-    //检查标志
-    private final boolean flag = true;
     //存储数据缓存数据体
     private MemoryData data = null;
     //存储数据缓存键
     private String key;
     //并发锁
-    private Lock lock = new ReentrantLock();
+    private final Lock lock = new ReentrantLock();
 
     public CacheDataBase() throws IOException, ClassNotFoundException {
-        new ProduceThread(queue,memoryDataBase,flag).start();
+        //标记队列
+        BlockingQueue<String> queue = new ArrayBlockingQueue<>(100);
+        //检查标志
+        boolean flag = true;
+
+        //启动工作线程
+        new ProduceThread(queue,memoryDataBase, flag).start();
         logger.info("检查线程已启动！");
         new ConsumeThread(queue, memoryDataBase, flag).start();
         logger.info("标记删除线程已启动！");
@@ -114,6 +116,4 @@ public class CacheDataBase {
         DataBaseUtil.saveDataBase(memoryDataBase);
         return data.getData();
     }
-
-
 }

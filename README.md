@@ -2,6 +2,7 @@
 1.实例化：每一步操作都会生成当前Map的快照(data.mp),使用fastJson2,支持Native
 2.自动过期与定时删除：内部启动三个线程分别用于检查，标记和删除实现过期功能
 使用：
+```java
     CacheDataBase cache = new CacheDataBase();
     //存储数据
     cache.put("key", "value");
@@ -12,3 +13,4 @@
     cache.remove("key");
     //设置过期
     cache.expired(long tiem);
+```
