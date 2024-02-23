@@ -14,10 +14,12 @@ public class CacheTest {
     public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
 //        AutoExpiredMap cache = new AutoExpiredMap();
         System.out.println();
-        Class<AutoExpiredMap> clazz = AutoExpiredMap.class;
-        Constructor<AutoExpiredMap> constructor = clazz.getDeclaredConstructor();
-        constructor.setAccessible(true);
-        AutoExpiredMap map = constructor.newInstance();
-
+//        Class<AutoExpiredMap> clazz = AutoExpiredMap.class;
+//        Constructor<AutoExpiredMap> constructor = clazz.getDeclaredConstructor();
+//        constructor.setAccessible(true);
+//        AutoExpiredMap map = constructor.newInstance();
+        for(int i = 0; i < 100; i ++){
+            AutoExpiredMap autoExpiredMap = MapCreater.newMap();
+        }
     }
 }

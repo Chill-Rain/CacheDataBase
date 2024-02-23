@@ -45,7 +45,7 @@ public class AutoExpiredMap {
     public AutoExpiredMap(boolean isSerializable) throws IOException, ClassNotFoundException {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         int j = 0;
-        for(int i = 0; i < stackTrace.length; i ++){
+        for(int i = stackTrace.length - 1; i >= 0;  i --){
             StackTraceElement stack = stackTrace[i];
             String methodName = stack.getMethodName();
             String className = stack.getClassName();
