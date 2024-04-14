@@ -35,7 +35,7 @@ public class ConsumeThread  extends Thread{
                             && data.getExpiredTime() - now <= 0
                             && !data.getIsDelete()) {
                         data.setIsDelete(true);
-                        logger.info("标记了数据--->" + memoryDataBase.get(key));
+                        logger.info("annotated data--->" + memoryDataBase.get(key));
                     }
                 }
                 Thread.sleep(1000);

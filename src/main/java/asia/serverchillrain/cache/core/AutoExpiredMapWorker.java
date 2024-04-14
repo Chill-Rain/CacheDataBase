@@ -3,6 +3,7 @@ package asia.serverchillrain.cache.core;
 import asia.serverchillrain.cache.dataline.MemoryData;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +18,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class AutoExpiredMapWorker {
     private static final Logger logger = LoggerFactory.getLogger(AutoExpiredMapWorker.class);
-    private static final String path = "data.mp";
+    //默认名称
+    @Setter
+    protected static String path = "data.bin";
 
     /**
      * 获取库
@@ -31,14 +34,14 @@ public class AutoExpiredMapWorker {
             Object o = ois.readObject();
             ois.close();
             if(o instanceof String){
-                logger.info("数据载入于--->" + path);
+                logger.info("get data from--->" + path);
                 return readJsonDataBase((String) o);
             }else {
-                logger.info("空内存数据库--->已创建新数据源");
+                logger.info("null data map---> now create new map");
                 return new ConcurrentHashMap<>();
             }
         }else {
-            logger.info("空内存数据库--->已创建新数据源");
+            logger.info("null data map---> now create new map");
             return new ConcurrentHashMap<>();
         }
     }

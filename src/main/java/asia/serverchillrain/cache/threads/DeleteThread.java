@@ -32,7 +32,7 @@ public class DeleteThread extends Thread{
                     Map.Entry<String, MemoryData> next = iterator.next();
                     if(next.getValue().getIsDelete()){
                         iterator.remove();
-                        logger.info("删除了数据--->" + next.getValue());
+                        logger.info("delete data--->" + next.getValue());
                     }
                 }
                 Thread.sleep(10 * 1000);

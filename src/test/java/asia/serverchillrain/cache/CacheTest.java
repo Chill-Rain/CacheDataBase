@@ -1,5 +1,6 @@
 package asia.serverchillrain.cache;
 
+import asia.serverchillrain.cache.MapCreater;
 import asia.serverchillrain.cache.core.AutoExpiredMap;
 
 import java.io.IOException;
@@ -12,14 +13,9 @@ import java.lang.reflect.InvocationTargetException;
 
 public class CacheTest {
     public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-//        AutoExpiredMap cache = new AutoExpiredMap();
-        System.out.println();
-//        Class<AutoExpiredMap> clazz = AutoExpiredMap.class;
-//        Constructor<AutoExpiredMap> constructor = clazz.getDeclaredConstructor();
-//        constructor.setAccessible(true);
-//        AutoExpiredMap map = constructor.newInstance();
-        for(int i = 0; i < 100; i ++){
-            AutoExpiredMap autoExpiredMap = MapCreater.newMap();
-        }
+        AutoExpiredMap cache = MapCreater.newMap(true,"data.114514");
+        cache.put("1", "1");
+        cache.save();
+
     }
 }

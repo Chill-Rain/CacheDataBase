@@ -1,9 +1,7 @@
 package asia.serverchillrain.cache;
 
 import asia.serverchillrain.cache.core.AutoExpiredMap;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import asia.serverchillrain.cache.core.AutoExpiredMapWorker;
 
 import java.io.IOException;
 
@@ -16,6 +14,10 @@ public class MapCreater {
         return new AutoExpiredMap();
     }
     public static AutoExpiredMap newMap(boolean isSerializable) throws IOException, ClassNotFoundException {
+        return new AutoExpiredMap(isSerializable);
+    }
+    public static AutoExpiredMap newMap(boolean isSerializable, String saveName) throws IOException, ClassNotFoundException {
+        AutoExpiredMapWorker.setPath(saveName);
         return new AutoExpiredMap(isSerializable);
     }
 }

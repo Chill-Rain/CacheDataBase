@@ -57,7 +57,7 @@ public class AutoExpiredMap {
         if(j == 0 ||  stackTrace.length  > j + 1){
             StackTraceElement stackTraceElement = stackTrace[j + 1];
             if (!stackTraceElement.getMethodName().equals("newMap")){
-                throw new RuntimeException("尝试直接调用构造方法的非法访问!");
+                throw new SecurityException("Unsafe operation!");
             }
         }
         this.isSerializable = isSerializable;
@@ -67,12 +67,13 @@ public class AutoExpiredMap {
         boolean flag = true;
         //启动工作线程
         new ProduceThread(queue, map, flag).start();
-        logger.info("检查线程已启动！");
+        logger.info("produce thread start working!");
         new ConsumeThread(queue, map, flag).start();
-        logger.info("标记删除线程已启动！");
+        logger.info("consume thread start working!");
         new DeleteThread(map, flag).start();
-        logger.info("删除线程已启动！");
-        logger.info("内存数据管理器已创建！");
+        logger.info("delete thread start working!");
+        logger.info("map create success!");
+        //运行期钩子在Native状态下不可用，需要有VM
         if(isSerializable){
             //运行期钩子
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -94,7 +95,7 @@ public class AutoExpiredMap {
      */
     public void save(){
         map.put(key, data);
-        logger.info("保存了数据--->" + key + "-" + data.getData().toString());
+        logger.info("save data--->{}-{}", key, data.getData().toString());
         if(isSerializable){
             AutoExpiredMapWorker.saveDataBase(map);
         }
@@ -150,7 +151,7 @@ public class AutoExpiredMap {
         this.data = new MemoryData(data);
         lock.unlock();
         if(old_data != null){
-            logger.info("修改了数据---> " + key + "-" + data.toString());
+            logger.info("modify data---> {}-{}", key, data.toString());
             return old_data.getData();
         }
         return data;
@@ -166,7 +167,7 @@ public class AutoExpiredMap {
             return null;
         }
         data.setIsDelete(true);
-        logger.info("移除了数据---> " + key + "-" + data.getData().toString());
+        logger.info("remove data---> {}-{}", key, data.getData().toString());
         if(isSerializable){
             AutoExpiredMapWorker.saveDataBase(map);
         }
@@ -183,7 +184,7 @@ public class AutoExpiredMap {
         if(data == null || data.getIsDelete()){
             return null;
         }
-        logger.info("获取了数据---> " + key + "-" + data.getData().toString());
+        logger.info("get data---> {}-{}", key, data.getData().toString());
         return data.getData();
     }
 }
